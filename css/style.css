@@ -1,0 +1,15 @@
+.login
+{
+    font-size: 200px;
+    font-family: monospace;
+    margin-top: 150px;
+    
+}
+ 
+form
+{
+    border: 3px solid blue;
+    margin: 0 auto;
+    width: 250px;
+    
+}
