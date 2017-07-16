@@ -1,4 +1,3 @@
-
 <?php
 include 'dbconnect.php';
 $fdate=$_POST['fdate'];
@@ -13,7 +12,7 @@ $tdate=$_POST['tdate'];
 include 'nav.php';
 ?>
 <title>
-Report by party
+Report by item and date
 </title>
 </head>
 <body>
@@ -32,9 +31,6 @@ S.no
 Item name
 </th>
 <th>
-Party name
-</th>
-<th>
 Total amount
 </th>
 </tr>
@@ -42,11 +38,8 @@ Total amount
 $sno=1;
 $all=$_POST['myInputs'][0];
 $query=$con->query("SELECT iname,ino FROM itemlist");
-	$sql=$con->query("SELECT pname,pno FROM party");
 $iname= Array();
 $ino= Array();
-$pname= Array();
-$pno= Array();
 $c=0;
 while($result=$query->fetch_assoc())
 {
@@ -54,48 +47,34 @@ while($result=$query->fetch_assoc())
 	$ino[]=$result['ino'];
 	$c++;
 }
-$s=0;
-while($result=$sql->fetch_assoc())
-{
-	$pname[]=$result['pname'];
-	$pno[]=$result['pno'];
-	$s++;
-}
 if($all=="ALL")
 {
 for($i=0;$i<$c;$i++)
 {
-	for($j=0;$j<$s;$j++)
-	{
-	$query=mysqli_query($con,"SELECT SUM(amount) FROM purchase WHERE('".$ino[$i]."'=ino AND date>='".$fdate."' AND date<='".$tdate."' AND pno='".$pno[$j]."')");
+	$query=mysqli_query($con,"SELECT SUM(amount) FROM sales WHERE('".$ino[$i]."'=ino AND date>='".$fdate."' AND date<='".$tdate."')");
 	$total= mysqli_fetch_row($query);
 	$sum=$total[0];
 		if($sum!=0)
 		{
 	echo "<tr><td>".$sno."</td>";
 	echo "<td>".$iname[$i]."</td>";
-	echo "<td>".$pname[$j]."</td>";
 	echo "<td>".$sum."</td></tr>";
 	$sno++;
 		}
-	}
 }
 }
 else
 {
-foreach($_POST['myInputs'] as $i => $pname)
+foreach($_POST['myInputs'] as $i => $iname)
 {
-	for($j=0;$j<$c;$j++)
-	{
-	$pno=$con->query("SELECT pno FROM party WHERE pname='".$pname."'")->fetch_object()->pno;
-	$query=mysqli_query($con,"SELECT SUM(amount) FROM purchase WHERE('".$pno."'=pno AND date>='".$fdate."' AND date<='".$tdate."' AND ino=".$ino[$j].")");
+	$ino=$con->query("SELECT ino FROM itemlist WHERE iname='".$iname."'")->fetch_object()->ino;
+	$query=mysqli_query($con,"SELECT SUM(amount) FROM sales WHERE('".$ino."'=ino AND date>='".$fdate."' AND date<='".$tdate."')");
 	$total= mysqli_fetch_row($query);
 	$sum=$total[0];
 	if($sum!=0)
 	{
-	echo "<tr><td>".$sno."</td><td>".$pname."</td><td>".$iname[$j]."</td><td>".$sum."</td></tr>"; 
+	echo "<tr><td>".$sno."</td><td>".$iname."</td><td>".$sum."</td></tr>"; 
 	++$sno;
-	}
 	}
 }
 }

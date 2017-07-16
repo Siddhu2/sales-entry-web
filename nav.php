@@ -15,6 +15,11 @@
 			<ul class="dropdown-menu"><li><a href="/kadai/addparty.php">Add party</a></li>
 			<li><a href="/kadai/editparty.php">Edit Party</a></li>
 			<li><a href="/kadai/delparty.php">Delete party</a></li></ul></li>
+			<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Expense name<span class="caret"></span></a>
+			<ul class="dropdown-menu"><li><a href="/kadai/addexp.php">Add expense name</a></li>
+			<li><a href="/kadai/editexp.php">Edit expense name</a></li>
+			<li><a href="/kadai/delexp.php">Delete expense name</a></li></ul></li>
+			<li><a href="/kadai/expenditure.php">Expenditure</a></li>
 			<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Sales<span class="caret"></span></a>
 			<ul class="dropdown-menu"><li><a href="/kadai/billing.php">Billing</a></li></ul></li>
             <li><a href="/kadai/purchase.php">Purchase</a></li>

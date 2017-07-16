@@ -61,69 +61,7 @@ while($result=$sql->fetch_assoc())
 	$pno[]=$result['pno'];
 	$s++;
 }
-if($iall=="ALL" && $pall="ALL")
-{
-for($i=0;$i<$c;$i++)
-{
-	for($j=0;$j<$s;$j++)
-	{
-	$query=mysqli_query($con,"SELECT SUM(amount) FROM purchase WHERE('".$ino[$i]."'=ino AND date>='".$fdate."' AND date<='".$tdate."' AND pno='".$pno[$j]."')");
-	$total= mysqli_fetch_row($query);
-	$sum=$total[0];
-		if($sum!=0)
-		{
-	echo "<tr><td>".$sno."</td>";
-	echo "<td>".$iname[$i]."</td>";
-	echo "<td>".$pname[$j]."</td>";
-	echo "<td>".$sum."</td></tr>";
-	$sno++;
-		}
-	}
-}
-}
-elseif($iall=="ALL" && $pall!="ALL")
-{
-{
-foreach($_POST['pname'] as $i => $pname)
-{
-	echo "hello";
-	for($j=0;$j<$c;$j++)
-	{
-	$pno=$con->query("SELECT pno FROM party WHERE pname='".$pname."'")->fetch_object()->pno;
-	$query=mysqli_query($con,"SELECT SUM(amount) FROM purchase WHERE('".$pno."'=pno AND date>='".$fdate."' AND date<='".$tdate."' AND ino=".$ino[$j].")");
-	$total= mysqli_fetch_row($query);
-	$sum=$total[0];
-	if($sum!=0)
-	{
-	echo "<tr><td>".$sno."</td><td>".$iname."</td><td>".$pname[$j]."</td><td>".$sum."</td></tr>"; 
-	++$sno;
-	}
-	}
-}
-}
-}
-elseif($iall!="ALL" && $pall=="ALL")
-{
 
-foreach($_POST['myInputs'] as $i => $iname)
-{
-	for($j=0;$j<$s;$j++)
-	{
-	$ino=$con->query("SELECT ino FROM itemlist WHERE iname='".$iname."'")->fetch_object()->ino;
-	$query=mysqli_query($con,"SELECT SUM(amount) FROM purchase WHERE('".$pno[$j]."'=pno AND date>='".$fdate."' AND date<='".$tdate."' AND ino=".$ino.")");
-	$total= mysqli_fetch_row($query);
-	$sum=$total[0];
-	if($sum!=0)
-	{
-	echo "<tr><td>".$sno."</td><td>".$pname[$j]."</td><td>".$iname."</td><td>".$sum."</td></tr>"; 
-	++$sno;
-	}
-	}
-}
-
-}
-else
-{
 foreach($_POST['myInputs'] as $i => $iname)
 {
 	$pname=$_POST['pname'][$i];
@@ -137,7 +75,6 @@ foreach($_POST['myInputs'] as $i => $iname)
 	echo "<tr><td>".$sno."</td><td>".$iname."</td><td>".$pname."</td><td>".$sum."</td></tr>"; 
 	++$sno;
 	}
-}
 }
 ?>
 </table>
